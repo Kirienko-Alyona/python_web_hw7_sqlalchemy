@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.10"
 sqlalchemy = "^2.0.4"
 alembic = "^1.9.4"
+faker = "^17.0.0"
 
 
 [build-system]
