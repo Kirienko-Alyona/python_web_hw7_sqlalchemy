@@ -1,4 +1,3 @@
-from random import randint
 import random
 
 from faker import Faker
@@ -61,13 +60,12 @@ def create_groups():
     session.add(group)
     session.commit()           
     
-def create_grades():
-    for _ in range(GROUPS_ST):
-        group = Group(
-            name = group.get()
-        )
-        session.add(group)
-    session.commit()  
+# def create_grades():
+#     grade = Grade(
+#     
+#     )
+#     session.add(grade)
+#     session.commit()  
 
     
 if __name__ == '__main__':
