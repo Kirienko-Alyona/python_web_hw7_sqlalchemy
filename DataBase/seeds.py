@@ -4,7 +4,7 @@ import random
 from faker import Faker
 
 from db import session
-from models import Teacher, Student, Team, Discipline, Grade
+from models import Student, Teacher, Team, Discipline, Grade
 
 DISCIPLINES = [
     "Вища математика",
@@ -18,6 +18,13 @@ TEAMS = ["team-1", "team-2", "team-3"]
 NUMBER_TEACHERS = 5
 NUMBER_STUDENTS = 50
 fake = Faker("uk_UA")
+
+def create_teams():
+    team = Team(
+        name = random.choice(TEAMS)
+    )
+    session.add(team)
+    session.commit() 
 
 def create_teachers():
     for _ in range(NUMBER_TEACHERS):
@@ -37,7 +44,7 @@ def create_students():
     classes = session.query(Team).all() 
     for student in students:
         team = random.choice(classes)
-    #group = iter(randint(1, len(GROUPS_ST)) for _ in range(len(students)))
+    group = iter(randint(1, len(GROUPS_ST)) for _ in range(len(students)))
         rel_ship = Student(team_id = team.id, student_id = student.id)
         session.add(rel_ship)
     session.commit()  
@@ -56,12 +63,7 @@ def create_disciplines():
         
     session.commit()    
     
-# def create_groups():
-#     group = Group(
-#         name = random.choice(GROUPS_ST)
-#     )
-#     session.add(group)
-#     session.commit()           
+          
     
 # def create_grades():
 #     grade = Grade(
@@ -72,7 +74,12 @@ def create_disciplines():
 
     
 if __name__ == '__main__':
-    create_teachers()
-    create_students()
-    create_disciplines()
-    #create_groups()
+    # create_teachers()
+    # create_students()
+    # create_disciplines()
+    #create_teams()
+    student = Student(
+        fullname = "James Cat"
+    )
+    session.add(student)
+    session.commit()
