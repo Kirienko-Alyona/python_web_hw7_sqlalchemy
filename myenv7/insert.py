@@ -5,7 +5,7 @@ from pprint import pprint
 from psycopg2 import Error
 from faker import Faker
 
-from db_connection import connection
+from db import connection
 
 disciplines = [
     "Вища математика",
