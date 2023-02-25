@@ -2,8 +2,8 @@ from random import randint
 
 from faker import Faker
 
-from DataBase.db import session
-from DataBase.models import Teacher, Student, Group, Discipline, Grade
+from db import session
+from models import Teacher, Student, Group, Discipline, Grade
 
 disciplines = [
     "Вища математика",
