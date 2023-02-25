@@ -7,12 +7,12 @@ Base = declarative_base()
 
 class Teacher(Base):
     __tablename__ = "teachers"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, nullable=False)
     fullname = Column(String(250), nullable=False)
 
 
-class Group(Base):
-    __tablename__ = "groups_st"
+class Team(Base):
+    __tablename__ = "teams"
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String(150), nullable=False)
     
@@ -22,8 +22,8 @@ class Student(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     fullname = Column(String(250), nullable=False)
     
-    group_id = Column("group_id", ForeignKey('groups_st.id', ondelete="CASCADE"))
-    groups_st = relationship("Group", secondary="group_id", back_populates="students", passive_deletes=True)
+    group_id = Column("team_id", ForeignKey('teams.id', ondelete="CASCADE"))
+    groups_st = relationship("Team", secondary="team_id", back_populates="students", passive_deletes=True)
 
 
 class Discipline(Base):
