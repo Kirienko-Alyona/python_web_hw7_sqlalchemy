@@ -34,10 +34,12 @@ def create_students():
         )
         session.add(student)
     students = session.query(Student).all()  
-    #groups_st = session.query(Group).all() 
-    group = iter(randint(1, len(GROUPS_ST)) for _ in range(len(students)))
-    rel = Student(group_id = group.id)
-    session.add(rel)
+    groups_st = session.query(Group).all() 
+    for student in students:
+        group = random.choice(groups_st)
+    #group = iter(randint(1, len(GROUPS_ST)) for _ in range(len(students)))
+        rel_ship = Student(group_id = group.id, student_id = student.id)
+        session.add(rel_ship)
     session.commit()  
     
 def create_disciplines():
@@ -70,7 +72,7 @@ def create_groups():
 
     
 if __name__ == '__main__':
-    #create_teachers()
-    #create_students()
-    #create_disciplines()
+    create_teachers()
+    create_students()
+    create_disciplines()
     create_groups()

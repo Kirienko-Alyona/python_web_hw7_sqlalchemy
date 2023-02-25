@@ -7,7 +7,7 @@ Base = declarative_base()
 
 class Teacher(Base):
     __tablename__ = "teachers"
-    id = Column(Integer, primary_key=True, nullable=False)
+    id = Column(Integer, primary_key=True)
     fullname = Column(String(250), nullable=False)
 
 
