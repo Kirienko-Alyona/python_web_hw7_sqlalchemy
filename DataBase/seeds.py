@@ -33,7 +33,7 @@ def create_students():
         )
         session.add(student)
     students = session.query(Student).all()  
-    groups_st = session.query(Group).all() 
+    #groups_st = session.query(Group).all() 
     group = iter(randint(1, len(groups_st)) for _ in range(len(students)))
     rel = Student(group_id = group.id)
     session.add(rel)
