@@ -44,7 +44,7 @@ def create_students():
     classes = session.query(Team).all() 
     for student in students:
         team = random.choice(classes)
-    group = iter(randint(1, len(GROUPS_ST)) for _ in range(len(students)))
+        team = iter(randint(1, len(TEAMS)) for _ in range(len(students)))
         rel_ship = Student(team_id = team.id, student_id = student.id)
         session.add(rel_ship)
     session.commit()  
