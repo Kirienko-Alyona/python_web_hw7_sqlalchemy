@@ -24,7 +24,7 @@ def create_teams():
         team = Team(
             name = team_
     )
-    session.add(team)
+        session.add(team)
     session.commit() 
     
 def create_students():
