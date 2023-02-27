@@ -28,20 +28,13 @@ def create_teams():
     session.commit() 
     
 def create_students():
+    teams_rel = session.query(Team.id).all() 
     for _ in range(1, NUMBER_STUDENTS + 1):
         student = Student(
-            fullname = fake.name()
+            fullname = fake.name(),
+            team_id = (random.choice(teams_rel))[0]
         )
         session.add(student)
-    teams_rel = session.query(Team).all() 
-    students_rel = session.query(Student).all()  
-    #session.rollback()
-    
-    for student in students_rel:
-        team = random.choice(teams_rel)
-        #for team in teams_rel:
-        rel_ship = Student(team_id = team.id)
-        session.add(rel_ship)
     session.commit() 
 
 def create_teachers():
@@ -66,23 +59,21 @@ def create_disciplines():
     
 def create_grades():
     disciplines_rel = session.query(Discipline.id).all()
+    students_rel = session.query(Student.id).all()
     for _ in range(1, NUMBER_STUDENTS + 1):
         grade = Grade(
             grade = random.choice(range(1, 12)),
-            date_of = fake.date_between(start_date="-1y")
-            #discipline_id = 
-            #discipline_id = random.choice(range(len(session.query(Discipline.id).all()))),
-            #student_id = random.choice(range(len(session.query(Student.id).all())))
+            date_of = fake.date_between(start_date="-1y"),
+            discipline_id = (random.choice(disciplines_rel))[0],
+            student_id = (random.choice(students_rel))[0]
         )
-            
-        
         session.add(grade)
     session.commit()  
 
     
 if __name__ == '__main__':
-    #create_teams()
-    #create_students()
+    create_teams()
+    create_students()
     create_teachers()
     create_disciplines()
     create_grades()

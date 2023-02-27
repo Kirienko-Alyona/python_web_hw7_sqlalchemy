@@ -31,6 +31,7 @@ class Discipline(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String(50), nullable=False)
     teacher_id = Column("teacher_id", ForeignKey('teachers.id', ondelete="CASCADE"))
+    
     teachers_rel = relationship("Teacher", backref="disciplines")
     
     
