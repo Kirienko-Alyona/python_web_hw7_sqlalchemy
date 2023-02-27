@@ -26,14 +26,6 @@ def create_teams():
     )
     session.add(team)
     session.commit() 
-
-def create_teachers():
-    for _ in range(1, NUMBER_TEACHERS + 1):
-        teacher = Teacher(
-            fullname = fake.name()
-        )
-        session.add(teacher)
-    session.commit()   
     
 def create_students():
     for _ in range(1, NUMBER_STUDENTS + 1):
@@ -50,31 +42,37 @@ def create_students():
         #for team in teams_rel:
         rel_ship = Student(team_id = team.id)
         session.add(rel_ship)
-    session.commit()  
+    session.commit() 
+
+def create_teachers():
+    for _ in range(1, NUMBER_TEACHERS + 1):
+        teacher = Teacher(
+            fullname = fake.name()
+        )
+        session.add(teacher)
+    session.commit() 
     
 def create_disciplines():
+    teachers_rel = session.query(Teacher.id).all()
+    print(teachers_rel)
+    
     for discip in DISCIPLINES:
         discipline = Discipline(
-            name = discip
-        )
+            name = discip,
+            teacher_id = (random.choice(teachers_rel))[0]
+        )   
         session.add(discipline)
-            
-    teachers_rel = session.query(Teacher).all()
-    disciplines_rel = session.query(Discipline).all()
-    
-    for teacher in teachers_rel:
-        discipline = random.choice(disciplines_rel)
-        rel_ship = Discipline(teacher_id = teacher.id)
-        session.add(rel_ship)
-        
-    session.commit()    
-            
+    session.commit()             
     
 def create_grades():
-    for _ in range(1, 12):
+    disciplines_rel = session.query(Discipline.id).all()
+    for _ in range(1, NUMBER_STUDENTS + 1):
         grade = Grade(
-            grade = fake.num(),
-            Date = fake.date_between(start_date="-1y") 
+            grade = random.choice(range(1, 12)),
+            date_of = fake.date_between(start_date="-1y")
+            #discipline_id = 
+            #discipline_id = random.choice(range(len(session.query(Discipline.id).all()))),
+            #student_id = random.choice(range(len(session.query(Student.id).all())))
         )
             
         
@@ -83,9 +81,9 @@ def create_grades():
 
     
 if __name__ == '__main__':
-    create_teams()
+    #create_teams()
+    #create_students()
     create_teachers()
-    create_students()
     create_disciplines()
     create_grades()
     # student = Student(
