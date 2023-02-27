@@ -20,14 +20,15 @@ NUMBER_STUDENTS = 50
 fake = Faker("uk_UA")
 
 def create_teams():
-    team = Team(
-        name = random.choice(TEAMS)
+    for team_ in TEAMS:
+        team = Team(
+            name = team_
     )
     session.add(team)
     session.commit() 
 
 def create_teachers():
-    for _ in range(NUMBER_TEACHERS):
+    for _ in range(1, NUMBER_TEACHERS + 1):
         teacher = Teacher(
             fullname = fake.name()
         )
@@ -35,51 +36,60 @@ def create_teachers():
     session.commit()   
     
 def create_students():
-    for _ in range(NUMBER_STUDENTS):
+    for _ in range(1, NUMBER_STUDENTS + 1):
         student = Student(
             fullname = fake.name()
         )
         session.add(student)
-    students = session.query(Student).all()  
-    classes = session.query(Team).all() 
-    for student in students:
-        team = random.choice(classes)
-        team = iter(randint(1, len(TEAMS)) for _ in range(len(students)))
-        rel_ship = Student(team_id = team.id, student_id = student.id)
+    teams_rel = session.query(Team).all() 
+    students_rel = session.query(Student).all()  
+    #session.rollback()
+    
+    for student in students_rel:
+        team = random.choice(teams_rel)
+        #for team in teams_rel:
+        rel_ship = Student(team_id = team.id)
         session.add(rel_ship)
     session.commit()  
     
 def create_disciplines():
-    discipline = Discipline(
-        name = random.choice(DISCIPLINES)
-    )
-    session.add(discipline)
-        
-    teachers = session.query(Teacher).all()
-    disciplines = session.query(Discipline).all()
-      
-    teacher = iter(randint(1, teachers) for _ in range(len(disciplines)))
-    session.add(teacher_id = teacher.id)
+    for discip in DISCIPLINES:
+        discipline = Discipline(
+            name = discip
+        )
+        session.add(discipline)
+            
+    teachers_rel = session.query(Teacher).all()
+    disciplines_rel = session.query(Discipline).all()
+    
+    for teacher in teachers_rel:
+        discipline = random.choice(disciplines_rel)
+        rel_ship = Discipline(teacher_id = teacher.id)
+        session.add(rel_ship)
         
     session.commit()    
+            
     
-          
-    
-# def create_grades():
-#     grade = Grade(
-#     
-#     )
-#     session.add(grade)
-#     session.commit()  
+def create_grades():
+    for _ in range(1, 12):
+        grade = Grade(
+            grade = fake.num(),
+            Date = fake.date_between(start_date="-1y") 
+        )
+            
+        
+        session.add(grade)
+    session.commit()  
 
     
 if __name__ == '__main__':
-    # create_teachers()
-    # create_students()
-    # create_disciplines()
-    #create_teams()
-    student = Student(
-        fullname = "James Cat"
-    )
-    session.add(student)
-    session.commit()
+    create_teams()
+    create_teachers()
+    create_students()
+    create_disciplines()
+    create_grades()
+    # student = Student(
+    #     fullname = "James Cat"
+    # )
+    # session.add(student)
+    # session.commit()
