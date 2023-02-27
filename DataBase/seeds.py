@@ -60,12 +60,13 @@ def create_disciplines():
 def create_grades():
     disciplines_rel = session.query(Discipline.id).all()
     students_rel = session.query(Student.id).all()
-    for _ in range(1, NUMBER_STUDENTS + 1):
+    for i in range(1, NUMBER_STUDENTS + 1):
         grade = Grade(
             grade = random.choice(range(1, 12)),
             date_of = fake.date_between(start_date="-1y"),
             discipline_id = (random.choice(disciplines_rel))[0],
-            student_id = (random.choice(students_rel))[0]
+            student_id = (random.choice(students_rel))[0],
+            id = i
         )
         session.add(grade)
     session.commit()  
