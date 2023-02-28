@@ -8,13 +8,13 @@ Base = declarative_base()
 class Team(Base):
     __tablename__ = "teams"
     id = Column(Integer, primary_key=True, nullable=False)
-    name = Column(String(150), nullable=False)
+    name = Column(String(150), nullable=False, unique=True)
     
     
 class Student(Base):
     __tablename__ = "students"
     id = Column(Integer, primary_key=True, nullable=False)
-    fullname = Column(String(250), nullable=False)
+    fullname = Column(String(250), nullable=False, unique=True)
     team_id = Column(Integer, ForeignKey("teams.id", ondelete="CASCADE"))
     
     teams_rel = relationship("Team", backref="students")
@@ -23,7 +23,7 @@ class Student(Base):
 class Teacher(Base):
     __tablename__ = "teachers"
     id = Column(Integer, primary_key=True, nullable=False)
-    fullname = Column(String(250), nullable=False)
+    fullname = Column(String(250), nullable=False, unique=True)
     
 
 class Discipline(Base):

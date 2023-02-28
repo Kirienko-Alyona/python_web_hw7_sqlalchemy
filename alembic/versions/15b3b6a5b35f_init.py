@@ -1,8 +1,8 @@
 """Init
 
-Revision ID: 727215d9b89a
-Revises: 3b6ede30e7d5
-Create Date: 2023-02-28 00:50:23.000792
+Revision ID: 15b3b6a5b35f
+Revises: 
+Create Date: 2023-02-28 02:35:31.067385
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '727215d9b89a'
-down_revision = '3b6ede30e7d5'
+revision = '15b3b6a5b35f'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -21,12 +21,14 @@ def upgrade() -> None:
     op.create_table('teachers',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('fullname', sa.String(length=250), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('fullname')
     )
     op.create_table('teams',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=150), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('disciplines',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -40,7 +42,8 @@ def upgrade() -> None:
     sa.Column('fullname', sa.String(length=250), nullable=False),
     sa.Column('team_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['team_id'], ['teams.id'], ondelete='CASCADE'),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('fullname')
     )
     op.create_table('grades',
     sa.Column('id', sa.Integer(), nullable=False),
