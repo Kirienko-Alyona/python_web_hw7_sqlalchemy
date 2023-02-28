@@ -83,8 +83,3 @@ if __name__ == '__main__':
     create_teachers()
     create_disciplines()
     create_grades()
-    # student = Student(
-    #     fullname = "James Cat"
-    # )
-    # session.add(student)
-    # session.commit()
