@@ -12,7 +12,8 @@ def select_1():
     results = session.query(Student.fullname, func.round(func.avg(Grade.grade), 2).label("avg_grade"))\
         .select_from(Grade).join(Student).group_by(Student.id).order_by(desc("avg_grade")).limit(5).all()
     for result in results:    
-        print(colored(result, "blue"))    
+        print(colored(result, "blue"))  
+    print()      
 
 
 #Найти студента с наивысшим средним баллом по определенному предмету.
@@ -20,7 +21,7 @@ def select_2():
     result = session.query(Discipline.name, Student.fullname, func.round(func.avg(Grade.grade), 2).label("avg_grade"))\
         .select_from(Grade).join(Student).join(Discipline).filter(Discipline.id == 3).group_by(Student.fullname, Discipline.name).order_by(desc("avg_grade")).first()
     print(colored(result, "blue"))
-    
+    print()
     
 #Найти средний балл в группах по определенному предмету.
 def select_3():
@@ -28,14 +29,14 @@ def select_3():
         .select_from(Grade).join(Student).join(Discipline).join(Team).filter(Discipline.id == 5).group_by(Discipline.name, Team.name).order_by(desc("avg_grade")).all()
     for result in results:    
         print(colored(result, "blue"))
-
+    print()
 
 #Найти средний балл на потоке (по всей таблице оценок).
 def select_4():
     result = session.query(func.round(func.avg(Grade.grade), 2).label("avg_grade"))\
         .select_from(Grade).order_by(desc("avg_grade")).scalar()
     print(colored(result, "blue"))
-
+    print()
 
 #Список курсов, которые читает определенный преподаватель.
 def select_5():
@@ -43,7 +44,7 @@ def select_5():
         .select_from(Discipline).join(Teacher).filter(Teacher.id == 2).order_by(desc(Discipline.name)).all()
     for result in results:    
         print(colored(result, "blue"))
-    
+    print()   
 
 #Найти список студентов в определенной группе.
 def select_6():
@@ -51,7 +52,7 @@ def select_6():
         .select_from(Student).join(Team).filter(Team.id == 2).order_by(Student.fullname).all()
     for result in results:    
         print(colored(result, "blue"))
-
+    print()
 
 #Найти оценки студентов в отдельной группе по определенному предмету.
 def select_7():
@@ -59,7 +60,7 @@ def select_7():
         .select_from(Grade).join(Discipline).join(Student).join(Team).filter(Team.id == 2, Discipline.id == 1).order_by(Grade.grade).all()
     for result in results:    
         print(colored(result, "blue"))
-    
+    print()    
 
 #Найти средний балл, который ставит определенный преподаватель по своим предметам.
 def select_8():
@@ -67,7 +68,7 @@ def select_8():
         .select_from(Grade).join(Discipline).join(Teacher).filter(Teacher.id == 5).group_by(Teacher.fullname, Discipline.name).order_by("avg_grade").all()
     for result in results:    
         print(colored(result, "blue"))
-    
+    print()    
 
 #Найти список курсов, которые посещает определенный студент.
 def select_9():
@@ -75,7 +76,7 @@ def select_9():
         .select_from(Grade).join(Discipline).join(Student).filter(Student.id == 29).group_by(Discipline.name, Student.fullname).order_by(Discipline.name).all()
     for result in results:    
         print(colored(result, "blue"))
-
+    print()
 
 #Список курсов, которые определенному студенту читает определенный преподаватель.
 def select_10():
@@ -83,14 +84,14 @@ def select_10():
         .select_from(Grade).join(Discipline).join(Student).join(Teacher).filter(Student.id == 12, Teacher.id == 5).group_by(Discipline.name, Student.fullname, Teacher.fullname).order_by(Discipline.name).all()
     for result in results:    
         print(colored(result, "blue"))
-        
+    print()        
         
 #Средний балл, который определенный преподаватель ставит определенному студенту.
 def select_11():
     result = session.query(Teacher.fullname, Student.fullname, func.round(func.avg(Grade.grade), 2).label("avg_grade"))\
         .select_from(Grade).join(Discipline).join(Student).join(Teacher).filter(Student.id == 12, Teacher.id == 5).group_by(Discipline.name, Student.fullname, Teacher.fullname).one()    
     print(colored(result, "blue"))
-        
+    print()        
 
 #Оценки студентов в определенной группе на последнем занятии (по определенному предмету - который не указывается).
 # def select_12():
@@ -98,7 +99,7 @@ def select_11():
 #         .select_from(Grade).join(Discipline).join(Student).join(Team).filter((Team.id == 2, Grade.date_of).in_((session.query(func.max(Grade.date_of)).select_from(Grade).first())))
 #     for result in results:    
 #         print(colored(result, "blue"))        
-
+#         print()
 
 if __name__ == '__main__':
     print(colored("1--> Найти 5 студентов с наибольшим средним баллом по всем предметам.", "magenta"))
