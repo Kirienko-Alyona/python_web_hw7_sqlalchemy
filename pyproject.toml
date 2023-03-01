@@ -12,6 +12,7 @@ alembic = "^1.9.4"
 sqlalchemy = "^2.0.4"
 psycopg2 = "^2.9.5"
 fake = "^0.8"
+termcolor = "^2.2.0"
 
 
 [build-system]
