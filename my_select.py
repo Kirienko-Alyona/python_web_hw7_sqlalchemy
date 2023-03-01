@@ -1,5 +1,4 @@
 from sqlalchemy import func, desc
-#from sqlalchemy.orm import in_ #не импортируется
 
 from termcolor import colored
 
@@ -93,13 +92,14 @@ def select_11():
     print(colored(result, "blue"))
     print()        
 
+        
 #Оценки студентов в определенной группе на последнем занятии (по определенному предмету - который не указывается).
-# def select_12():
-#     results = session.query(Student.fullname, Discipline.name, Team.name, Grade.grade, Grade.date_of.label("date_last_lesson"))\
-#         .select_from(Grade).join(Discipline).join(Student).join(Team).filter((Team.id == 2, Grade.date_of).in_((session.query(func.max(Grade.date_of)).select_from(Grade).first())))
-#     for result in results:    
-#         print(colored(result, "blue"))        
-#         print()
+def select_12():
+    results = session.query(Student.fullname, Discipline.name, Team.name, Grade.grade, Grade.date_of.label("date_last_lesson"))\
+        .select_from(Grade).join(Discipline).join(Student).join(Team).filter(Team.id == 3).filter(Grade.date_of.in_((session.query(func.max(Grade.date_of)).select_from(Grade).first())))
+    for result in results:    
+        print(colored(result, "blue"))        
+        print()        
 
 if __name__ == '__main__':
     print(colored("1--> Найти 5 студентов с наибольшим средним баллом по всем предметам.", "magenta"))
@@ -124,6 +124,6 @@ if __name__ == '__main__':
     select_10()
     print(colored("11--> Средний балл, который определенный преподаватель ставит определенному студенту.", "magenta"))
     select_11()
-    #print(colored("12--> Оценки студентов в определенной группе на последнем занятии (по определенному предмету - который не указывается).", "magenta"))
-    # select_12()
-    # print()
+    print(colored("12--> Оценки студентов в определенной группе на последнем занятии (по определенному предмету - который не указывается).", "magenta"))
+    select_12()
+    print()
