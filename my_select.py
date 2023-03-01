@@ -32,7 +32,7 @@ def select_3():
 #Найти средний балл на потоке (по всей таблице оценок).
 def select_4():
     result = session.query(func.round(func.avg(Grade.grade), 2).label("avg_grade"))\
-        .select_from(Grade).order_by(desc("avg_grade")).one()
+        .select_from(Grade).order_by(desc("avg_grade")).scalar()
     print(result)
 
 
